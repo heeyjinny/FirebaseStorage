@@ -6,11 +6,17 @@ plugins {
     id 'com.google.gms.google-services'
 }
 
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
 android {
     namespace 'com.heeyjinny.firebasestorage'
     compileSdk 32
 
     defaultConfig {
+
+        buildConfigField "String", "STORAGE", properties ['STORAGE']
+
         applicationId "com.heeyjinny.firebasestorage"
         minSdk 23
         targetSdk 32
@@ -47,8 +53,8 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:31.1.1')
     implementation 'com.google.firebase:firebase-analytics-ktx'
 
-    //파이어베이스 데이터베이스 의존성 추가
-    implementation 'com.google.firebase:firebase-database-ktx'
+    //파이어베이스 스토리지 추가
+    implementation 'com.google.firebase:firebase-storage-ktx'
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.5.1'
