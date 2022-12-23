@@ -4,6 +4,8 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.heeyjinny.firebasestorage.databinding.ActivityMainBinding
@@ -27,6 +29,34 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
     }//onCreate
+
+    //4
+    //외부 저장소 권한 추가
+    //스마트폰의 갤러리에 접근해선택된 이미지의 Uri가져오기 위함
+    //AndroidManifest.xml
+
+    //5
+    //이미지 갤러리를 불러오는 런처 생성
+    //갤러리에서 파일을 선택하면 반환되는 Uri로
+    //uploadImage()메서드 호출
+    val galleryLauncher = registerForActivityResult(ActivityResultContracts.GetContent()){
+        uploadImage(it!!)
+    }
+
+    //6
+    //이미지 갤러리는 외부 저장소를 사용하기에 권한요청하는 런처 생성
+    //권한이 승인되었을 때만 갤러리 런처 호출 메서드 작성
+    val permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()){
+        if (it){
+            galleryLauncher.launch("image/*")
+        }else{
+            Toast.makeText(baseContext, "외부 저장소 읽기 권한을 승인해야 사용할 수 있습니다.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    //7
+    //외부저장소 승인하여 이미지 업로드 하는 버튼 생성
+    //activity_main.xml
 
     //2
     //파이어베이스에 이미지 저장하는 메서드 작성
