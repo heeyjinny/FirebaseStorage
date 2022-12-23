@@ -56,6 +56,10 @@ dependencies {
     //파이어베이스 스토리지 추가
     implementation 'com.google.firebase:firebase-storage-ktx'
 
+    //파이어베이스 전용 Glide 의존성 설치
+    //https의 인터넷 주소를 통해 이미지 받기 위함...
+    implementation 'com.firebaseui:firebase-ui-storage:8.0.2'
+
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'com.google.android.material:material:1.7.0'

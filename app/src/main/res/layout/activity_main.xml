@@ -6,14 +6,38 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+<!--  업로드버튼 추가  -->
     <Button
         android:id="@+id/btnUpload"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:backgroundTint="@color/teal_200"
         android:text="upload"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnDowmload"
+        app:layout_constraintStart_toStartOf="parent" />
+
+<!--  업로드한 이미지를 다운로드 후 화면 추가를 위한 배치  -->
+    <Button
+        android:id="@+id/btnDowmload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/teal_700"
+        android:text="download"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnUpload"
+        app:layout_constraintTop_toTopOf="@+id/btnUpload" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnUpload"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_gallery" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

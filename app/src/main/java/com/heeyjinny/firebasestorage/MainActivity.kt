@@ -7,11 +7,14 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import com.bumptech.glide.Glide
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.heeyjinny.firebasestorage.databinding.ActivityMainBinding
 
 /**  파이어베이스 클라우드 스토리지 사용하기  **/
+//실제 서비스에서 적용 시 스토리지와 데이터베이스를 함께 사용
+//데이터베이스 필드 중 하나에 스토리지의 경로를 저장해놓고 사용
 
 class MainActivity : AppCompatActivity() {
 
@@ -40,7 +43,37 @@ class MainActivity : AppCompatActivity() {
             permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
         }
 
+        //8
+        //업로드한 이미지 다운로드 후 화면에 표시하기
+        //activity_main.xml 설정
+
+        //9
+        //파이어베이스 스토리지를 통해 이미지를 직접다운로드 하지않고
+        //https로 시작하는 인터넷 주소를 통해 이미지를 다운로드하기 때문에...
+        //파이어베이스 전용 Glide 의존성 설치 필요...
+        //firebase-ui-storage 의존성 추가
+
+        //11
+        //다운로드 버튼을 클릭하면 downloadImage()메서드 호출
+        //이미지의 주소를 전달하고 이미지를 가져와 화면에 출력
+        //이미지의 주소는 업로드하여 생성된 이미지 주소 복사하여 사용...
+        binding.btnDowmload.setOnClickListener {
+            downloadImage("images/temp_1671816363132.jpeg")
+        }
+
     }//onCreate
+
+    //10
+    //이미지 주소를 가져와 이미지 뷰에 세팅하는 메서드 작성
+    fun downloadImage(path: String){
+        //10-1
+        //스토리지 레퍼런스를 연결하고 이미지 uri가져오기
+        storage.getReference(path).downloadUrl.addOnSuccessListener {
+            Glide.with(this).load(it).into(binding.imageView)
+        }.addOnFailureListener {
+            Log.e("스토리지", "다운로드 에러: ${it.message}")
+        }
+    }//downloadImage
 
     //4
     //외부 저장소 권한 추가
