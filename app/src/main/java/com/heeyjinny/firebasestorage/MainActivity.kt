@@ -1,5 +1,6 @@
 package com.heeyjinny.firebasestorage
 
+import android.Manifest
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -28,6 +29,17 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        //7
+        //외부저장소 승인하여 이미지 업로드 하는 버튼 생성
+        //activity_main.xml
+        //7-1
+        //업로드버튼 클릭 시 외부저장소 읽기권한 런처를 호출하여
+        //권한 요청
+        binding.btnUpload.setOnClickListener {
+            permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+        }
+
     }//onCreate
 
     //4
@@ -54,10 +66,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    //7
-    //외부저장소 승인하여 이미지 업로드 하는 버튼 생성
-    //activity_main.xml
-
     //2
     //파이어베이스에 이미지 저장하는 메서드 작성
     //이미지 업로드 메서드 생성
@@ -82,7 +90,7 @@ class MainActivity : AppCompatActivity() {
             //성공 리스너를 통해 작업 성공 시
             //해당 경로를 저장해뒀다가 이미지를 불러올 때 사용함
             //이 프로젝트에서는 로그캣에 출력된 주소를 복사하여 사용...
-            Log.d("스토리지", "성공주소: $fullPath")
+            Log.d("스토리지", "성공주소: ${fullPath}")
         }
 
     }//uploadImage
